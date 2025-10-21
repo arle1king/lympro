@@ -1,0 +1,16 @@
+# Programa de prueba para el lenguaje ALU
+function main() do
+    x = 10
+    y = 25
+
+    print("Iniciando programa...")
+
+    if y > x then
+        print("y es mayor que x")
+    else
+        print("x es mayor o igual que y")
+    end
+
+    # El valor de la última expresión es el que retorna la función.
+    (y + 5) * 2
+end main
