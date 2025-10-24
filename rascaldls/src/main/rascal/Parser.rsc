@@ -1,4 +1,4 @@
-module::main::rascal::Parser
+module main::rascal::Parser
 import main::rascal::Syntax;
 import ParseTree;
 public start[Module] parseModule(str src,loc origin)=parse (#start[Module], src, origin);

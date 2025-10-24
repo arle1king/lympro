@@ -1,4 +1,4 @@
-module::main::rascal::main
+module main::rascal::main
 import IO;
 public void main() {
     println("Hello Rascal");
