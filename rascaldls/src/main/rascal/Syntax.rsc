@@ -1,4 +1,16 @@
 module main::rascal::Syntax
+layout L=[\ \t\n\r]*;
+keyword KW = "function" | "do" | "end" | "data" | "with" | "struct" | "if" | "then" | "else" | "true" | "false" | "or" | "and" | "eq" | "ne" | "lt" | "le" | "gt" | "ge";
+lexical ID= [a-zA-Z][a-zA-Z0-9_]* \ KW;
+syntax Id = ID;
+lexical INT = [0-9]+;
+lexical FLOAT = INT "." INT;
+lexical IDStmt = ID !>> [\ \t\n\r]*("."|"$"|"(");
+syntax SimpleId = IDStmt;
+start syntax Module = Vars? Top*;
+syntax Vars=vars: Id ("," Id)*;
+syntax Top = topDecl:Decl|topInv:Invocation;
+syntax Decl = funDecl:Function | dataDecl:Data;
 syntax ParamList = params: "("Vars?")";
 syntax Body = body:Stmt*;
 syntax NonEmptyBody = body:Stmt+;

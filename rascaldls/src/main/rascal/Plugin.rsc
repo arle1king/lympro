@@ -1,13 +1,16 @@
-module Plugin
+module main::rascal::Plugin
 
 import ParseTree;
-import util::IDEServices;
-import Syntax;
+import main::rascal::Syntax;
+import main::rascal::Parser;
+import main::rascal::Generator;
 
-public void main() {
-    registerLanguage(
-        "ALU",     
-        "alu",     
-        (Tree t, loc l) { return parse(#start[Program], l); }
-    );
+
+public str reportFromFile(loc file) {
+    start[Module] cst=parseModule(file);
+    return runReport(cst);
+}
+public str reportFromString(str code, loc origin) {
+    start[Module] cst=parseModule(code, origin);
+    return runReport(cst);
 }
