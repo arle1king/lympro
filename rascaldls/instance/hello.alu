@@ -1,0 +1,7 @@
+x,y,z
+data with a,b X=struct(a,b) end Pair
+function() do
+    if true then [1] else [0] end
+end main
+f$(x,y)
+obj.m(z)

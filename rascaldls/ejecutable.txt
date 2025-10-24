@@ -1,0 +1,19 @@
+import main::rascal::Syntax;
+import main::rascal::Parser;
+import main::rascal::Generator;
+import main::rascal::Runner;
+loc f = |file:///C:/Users/valer/OneDrive/Documentos/lyym/lympro/rascaldls/instance/hello.alu|;
+runReportFile(f);
+import IO;
+import main::rascal::AST;
+import main::rascal::Implode;
+import main::rascal::Runner;
+runReportString(
+    "x,y,z
+    data with a,b X=struct(a,b) end Pair
+    function() do x end f
+    obj.m(z)
+    f$(x,y)",
+    |men:///demo.alu|
+);
+
