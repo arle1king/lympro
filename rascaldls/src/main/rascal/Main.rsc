@@ -5,36 +5,37 @@ import Syntax;
 import AST;
 import Interpreter;
 import ParseTree;
+import util::Implode;
 
 void main() {
-    // CAMBIA ESTA RUTA a la ubicación de tu archivo de prueba.
-    loc aluFile = |project://rascaldls/test.alu|;
+    // CAMBIA ESTA LÍNEA A LA RUTA DE TU PROYECTO
+    loc aluFile = |file:///C:/Users/valer/OneDrive/Escritorio/lympro/rascaldls/test.alu|;
     
     if (!exists(aluFile)) {
-        println("Error: El archivo de prueba no se encuentra en <aluFile>");
+        println("Error: No se encuentra el archivo <aluFile>");
         return;
     }
     
     str content = readFile(aluFile);
+    println("--- Contenido de test.alu ---");
+    println(content);
+    println("-----------------------------");
     
-    // 1. Parsear el código a un ParseTree.
     start[Program] parseTree;
     try {
-        parseTree = parse(#start[Program], content);
+        parseTree = parse(#start[Program], content, aluFile);
     } catch (ParseError e): {
         println("ERROR DE SINTAXIS: <e.message> en <e.location>");
         return;
     }
     
-    // 2. Convertir el ParseTree a un AST (Árbol de Sintaxis Abstracta).
     Program ast = implode(parseTree);
     
-    // 3. Evaluar el AST y mostrar el resultado en la consola.
-    println("--- Ejecutando programa ALU ---");
+    println("--- Ejecutando Intérprete de ALU ---");
     try {
         value result = eval(ast);
-        println("--- Ejecución terminada ---");
-        println("Resultado final del programa: <result>");
+        println("--- Ejecución Terminada ---");
+        println("Valor de retorno de main: <result>");
     } catch str s: {
         println("ERROR EN TIEMPO DE EJECUCIÓN: <s>");
     }

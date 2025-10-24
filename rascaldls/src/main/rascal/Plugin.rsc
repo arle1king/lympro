@@ -4,8 +4,10 @@ import ParseTree;
 import util::IDEServices;
 import Syntax;
 
-void main() {
-    registerLanguage("ALU", "alu", Tree (str, loc) {
-        return parse(#start[Program], str, loc);
-    });
+public void main() {
+    registerLanguage(
+        "ALU",     
+        "alu",     
+        (Tree t, loc l) { return parse(#start[Program], l); }
+    );
 }
