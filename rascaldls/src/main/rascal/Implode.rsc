@@ -25,9 +25,6 @@ public str stripBom(str src) {
     return src;
 }
 
-// =========================
-// Character classification
-// =========================
 
 public bool isDigit(str c) = 
     c == "0" || c == "1" || c == "2" || c == "3" || c == "4" || 
@@ -40,9 +37,6 @@ public bool isIdStart(str c) = isLetter(c) || c == "_";
 public bool isIdCharCh(str c) = isIdStart(c) || isDigit(c);
 public bool isIdChar(str c) = isIdStart(c) || isDigit(c);
 
-// =========================
-// Utility functions
-// =========================
 
 public int indexOfFrom(str src, str sub, int from) {
     int n = size(sub), m = size(src);
@@ -60,9 +54,7 @@ public int indexOfFrom(str src, str sub, int from) {
     return -1;
 }
 
-// =========================
-// Identifier validation
-// =========================
+
 
 public bool isIdName(str src, int dummy) {
     str t = trim(src);
@@ -88,9 +80,6 @@ public bool isIdName(str src, int dummy) {
     return true;
 }
 
-// =========================
-// Identifier extraction
-// =========================
 
 public str charAt(str s, int i) = substring(s, i, i + 1);
 public bool isWs(str c) = c == " " || c == "\t" || c == "\n" || c == "\r";
@@ -117,9 +106,6 @@ public str firstIdentifier(str src) {
     while (j < m && isIdChar(charAt(src, j))) j = j + 1;
     return substring(src, i, j);
 }
-// =========================
-// Function collector
-// =========================
 
 public set[str] collectFunctions(str src) {
     set[str] out = {};
@@ -128,44 +114,42 @@ public set[str] collectFunctions(str src) {
 
     while (true) {
         int p = indexOfFrom(src, "fun", pos);
-        if (p < 0) break; // no hay más funciones
+        if (p < 0) break; 
 
         int i = p + 3;
-        // saltar espacios
+      
         while (i < m && isWs(charAt(src, i))) i = i + 1;
 
-        // leer identificador
+    
         if (i < m && isIdStart(charAt(src, i))) {
             int j = i + 1;
             while (j < m && isIdChar(charAt(src, j))) j = j + 1;
             out += {substring(src, i, j)};
         }
 
-        // continuar búsqueda después de la palabra fun
+        
         pos = i + 1;
     }
 
     return out;
 }
 
-// =========================
-// Globals collector
-// =========================
+
 
 public list[str] collectGlobals(str src) {
     list[str] ids = [];
     int m = size(src);
     int i = 0;
 
-    // saltar espacios iniciales
+    
     while (i < m && isWs(charAt(src, i))) i = i + 1;
 
-    // si no empieza con una letra o guión bajo, no hay identificadores globales
+   
     if (i >= m || !isIdStart(charAt(src, i))) {
         return ids;
     }
 
-    // leer múltiples identificadores separados por coma
+    
     while (i < m) {
         int j = i + 1;
         while (j < m && isIdChar(charAt(src, j))) j = j + 1;
@@ -174,7 +158,7 @@ public list[str] collectGlobals(str src) {
         int k = j;
         while (k < m && isWs(charAt(src, k))) k = k + 1;
 
-        // si hay una coma, continuar con el siguiente identificador
+        
         if (k < m && charAt(src, k) == ",") {
             i = k + 1;
             while (i < m && isWs(charAt(src, i))) i = i + 1;
@@ -187,9 +171,6 @@ public list[str] collectGlobals(str src) {
     return ids;
 }
 
-// =========================
-// Data collector
-// =========================
 
 public set[str] collectDataNames(str src) {
     set[str] out = {};
@@ -198,7 +179,7 @@ public set[str] collectDataNames(str src) {
 
     while (true) {
         int p = indexOfFrom(src, "data", pos);
-        if (p < 0) break; // no hay más data
+        if (p < 0) break; 
 
         int withPos = indexOfFrom(src, "with", p + 4);
         if (withPos < 0) { pos = p + 4; continue; }
@@ -222,9 +203,7 @@ public set[str] collectDataNames(str src) {
 }
 
 
-// =========================
-// Implode logic
-// =========================
+
 
 public Module implodeModule(start[Module] cst) {
    str src = unparse(cst);
